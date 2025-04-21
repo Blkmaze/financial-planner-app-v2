@@ -1,0 +1,21 @@
+const [debts, setDebts] = useState([]);
+
+const handleCreditReportUpload = (e) => {
+  const file = e.target.files[0];
+  const reader = new FileReader();
+  reader.onload = (evt) => {
+    const lines = evt.target.result.split('\n');
+    const parsed = lines
+      .map(line => line.split(','))
+      .filter(row => row.length >= 4)
+      .map(([name, balance, rate, minPayment]) => ({
+        name,
+        balance: parseFloat(balance),
+        rate: parseFloat(rate),
+        minPayment: parseFloat(minPayment)
+      }));
+    setDebts(parsed);
+    console.log("Parsed Credit Report:", parsed);
+  };
+  reader.readAsText(file);
+};

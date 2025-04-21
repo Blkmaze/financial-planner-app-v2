@@ -1,0 +1,15 @@
+const importTransactions = async () => {
+  try {
+    const response = await fetch("/parsed-transactions.json");
+    const data = await response.json();
+    const mapped = data.map((item) => ({
+      id: Date.now() + Math.random(),
+      type: item.type,
+      amount: item.amount,
+      category: item.desc || "Imported"
+    }));
+    setHistory((prev) => [...mapped, ...prev]);
+  } catch (error) {
+    console.error(" Failed to import transactions:", error);
+  }
+};

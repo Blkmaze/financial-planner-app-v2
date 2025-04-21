@@ -1,0 +1,14 @@
+.animated-bg {
+  min-height: 100vh;
+  padding: 20px;
+  animation: gradientShift 10s ease infinite;
+  background: linear-gradient(-45deg, #1e3c72, #2a5298, #0f2027, #203a43);
+  background-size: 600% 600%;
+  color: white;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}

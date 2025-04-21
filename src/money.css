@@ -1,0 +1,40 @@
+body {
+  background-color: #f4f4f4;
+  overflow-x: hidden;
+  margin: 0;
+}
+
+.money {
+  position: fixed;
+  top: -50px;
+  font-size: 2rem;
+  animation: drop 10s linear infinite, spin 5s linear infinite;
+  color: hsl(calc(360 * var(--i) / 10), 90%, 60%);
+  left: calc(var(--i) * 10%);
+  pointer-events: none;
+  z-index: 0;
+  transform: rotate(0deg);
+}
+
+@keyframes drop {
+  0% {
+    top: -60px;
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    top: 100vh;
+    opacity: 0;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

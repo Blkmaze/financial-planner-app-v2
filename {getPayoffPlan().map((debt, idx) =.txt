@@ -1,0 +1,5 @@
+{getPayoffPlan().map((debt, idx) => (
+  <div key={idx}>
+    <strong>{debt.name}</strong>: Pay ${debt.recommendedPayment}
+  </div>
+))}

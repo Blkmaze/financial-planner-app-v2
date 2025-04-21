@@ -1,0 +1,14 @@
+const getPayoffPlan = () => {
+  if (debts.length === 0) return [];
+
+  const sortedDebts = [...debts].sort((a, b) => b.rate - a.rate);
+  let monthlyAvailable = discretionary; // Reuse existing discretionary income
+
+  const plan = sortedDebts.map(debt => {
+    let payment = Math.max(debt.minPayment, Math.min(debt.balance, monthlyAvailable));
+    monthlyAvailable -= payment;
+    return { ...debt, recommendedPayment: payment.toFixed(2) };
+  });
+
+  return plan;
+};
