@@ -1,0 +1,39 @@
+# setup-app.ps1
+Write-Host "📦 Installing dependencies..."
+npm install react-calendar firebase xlsx file-saver
+
+Write-Host "🎨 Installing Tailwind CSS for styling..."
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+
+Set-Content -Path "./tailwind.config.js" -Value @'
+module.exports = {
+  content: ["./src/**/*.{js,jsx}"],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+'@
+
+Set-Content -Path "./src/index.css" -Value @'
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1b1b2f);
+  background-size: 400% 400%;
+  animation: gradientFlow 15s ease infinite;
+  color: white;
+  font-family: sans-serif;
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+'@
+
+Write-Host "✅ Setup complete. Run 'npm start' to launch the app."

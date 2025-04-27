@@ -1,0 +1,11 @@
+Set-Location -Path $PSScriptRoot
+
+Write-Host "📦 Installing Tailwind CSS..."
+npm install -D tailwindcss postcss autoprefixer
+
+Write-Host "🌀 Initializing Tailwind config..."
+npx tailwindcss init -p
+
+Write-Host "✅ Tailwind initialized. Please manually edit:"
+Write-Host "📁 tailwind.config.js to include:"
+Write-Host '  content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"]'

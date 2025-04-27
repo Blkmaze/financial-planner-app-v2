@@ -1,0 +1,45 @@
+# setup-financial-ui.ps1
+
+Write-Host "`n📦 Installing Tailwind CSS..."
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+
+Write-Host "`n⚙️ Configuring tailwind.config.js..."
+@"
+module.exports = {
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  theme: {
+    extend: {
+      animation: {
+        gradientFlow: 'gradientFlow 15s ease infinite'
+      },
+      keyframes: {
+        gradientFlow: {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' }
+        }
+      }
+    }
+  },
+  plugins: []
+}
+"@ | Set-Content -Path "./tailwind.config.js" -Encoding UTF8
+
+Write-Host "`n🎨 Updating index.css with Tailwind and background animation..."
+@"
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-gray-900 text-white;
+}
+
+.animated-bg {
+  background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1b1b2f);
+  background-size: 400% 400%;
+  animation: gradientFlow 15s ease infinite;
+}
+"@ | Set-Content -Path "./src/index.css" -Encoding UTF8
+
+Write-Host "`n✅ UI styling complete. Restart with 'npm start'" -ForegroundColor Green

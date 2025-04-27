@@ -1,0 +1,14 @@
+const parseBankPdf = (text) => {
+  const lines = text.split('\n');
+  return lines
+    .filter(line => /\d{1,2}\/\d{1,2}\/\d{4}/.test(line) && /[\d,]+\.\d{2}/.test(line))
+    .map(line => {
+      const dateMatch = line.match(/\d{1,2}\/\d{1,2}\/\d{4}/);
+      const amountMatch = line.match(/[\d,]+\.\d{2}/g);
+      return {
+        date: dateMatch ? dateMatch[0] : 'Unknown',
+        amount: amountMatch ? amountMatch[amountMatch.length - 1] : '0.00',
+        description: line.trim()
+      };
+    });
+};

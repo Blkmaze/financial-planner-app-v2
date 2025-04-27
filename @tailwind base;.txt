@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.animated-bg {
+  @apply bg-gradient bg-[length:400%_400%] animate-gradient-x;
+}

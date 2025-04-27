@@ -1,55 +1,27 @@
 import React, { useState } from 'react';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
-export default function Login({ onLogin }) {
+function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoginMode, setIsLoginMode] = useState(true);
-  const [error, setError] = useState('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleLogin = async () => {
     try {
-      if (isLoginMode) {
-        await signInWithEmailAndPassword(auth, email, password);
-      } else {
-        await createUserWithEmailAndPassword(auth, email, password);
-      }
-      onLogin(); // callback to unlock the app
-    } catch (err) {
-      setError(err.message);
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      alert('Login failed: ' + error.message);
     }
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: '100px auto', padding: 20, border: '1px solid #ccc', borderRadius: 10 }}>
-      <h2>{isLoginMode ? 'Login' : 'Register'}</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type='email'
-          placeholder='Email'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          style={{ display: 'block', marginBottom: 10, width: '100%', padding: 8 }}
-        />
-        <input
-          type='password'
-          placeholder='Password'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          style={{ display: 'block', marginBottom: 10, width: '100%', padding: 8 }}
-        />
-        <button type='submit' style={{ width: '100%', padding: 10 }}>
-          {isLoginMode ? 'Login' : 'Register'}
-        </button>
-      </form>
-      <p style={{ marginTop: 10, cursor: 'pointer', color: 'blue' }} onClick={() => setIsLoginMode(!isLoginMode)}>
-        {isLoginMode ? 'Need an account? Register' : 'Already have an account? Login'}
-      </p>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+    <div className="login-container text-center p-8">
+      <h1 className="text-3xl font-bold">Sign In</h1>
+      <input type="email" placeholder="Email" className="block mt-4 p-2" value={email} onChange={e => setEmail(e.target.value)} />
+      <input type="password" placeholder="Password" className="block mt-2 p-2" value={password} onChange={e => setPassword(e.target.value)} />
+      <button onClick={handleLogin} className="mt-4 px-4 py-2 bg-blue-600 text-white rounded">Login</button>
     </div>
   );
 }
+
+export default Login;
